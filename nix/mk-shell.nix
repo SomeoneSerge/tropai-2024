@@ -1,4 +1,4 @@
-{ python3Packages, mkShell }:
+{ python3Packages, graphviz, mkShell }:
 
 mkShell {
   packages = [
@@ -6,9 +6,11 @@ mkShell {
       ipykernel
       notebook
       pyro-ppl
+      scipy
       seaborn
       torch
       torchvision
     ]))
+    graphviz
   ];
 }
