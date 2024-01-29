@@ -13,4 +13,7 @@ mkShell {
     ]))
     graphviz
   ];
+  shellHook = ''
+    python3 -m ipykernel install --user --name "tropai-2024" --display-name "Tropcal Probabilistic AI 2024"
+  '';
 }
