@@ -9,12 +9,17 @@
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        {
+          perSystem = { system, ... }: {
+            _module.args.pkgsCuda = import inputs.nixpkgs { config.allowUnfree = true; config.cudaSupport = true; inherit system; };
+          };
+        }
       ];
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
+      perSystem = { config, self', pkgs, pkgsCuda, ... }: {
         devShells.default = pkgs.callPackage ./nix/mk-shell.nix { };
+        devShells.cuda = pkgsCuda.callPackage ./nix/mk-shell.nix { };
       };
-      flake = {
-      };
+      flake = { };
     };
 }
